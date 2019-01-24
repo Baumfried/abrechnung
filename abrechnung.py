@@ -56,9 +56,7 @@ class Person:
         self.positionen.append(position)
         if dynamic: other.positionen.append(gegenposition)
     
-    def zahlt(self, other, betrag, betreff=None):
-        if not betreff:
-            betreff = 'Zahlung'
+    def zahlt(self, other, betrag, betreff='Zahlung'):
         self.neue_position(other, betrag, betreff)
     
     def bilanz(self, other=None):
