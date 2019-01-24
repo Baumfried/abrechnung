@@ -93,7 +93,7 @@ def rechnung_teilen(glaeubiger, schuldner, betrag, betreff):
 
 def alle_speichern():
     global personen
-    for person in personen:
+    for person in personen.values():
         person.positionen_speichern()
 
 def alle_laden(json_pfad=DATENPFAD):
