@@ -88,7 +88,7 @@ def loesche(person):
 def rechnung_teilen(glaeubiger, schuldner, betrag, betreff):
     if isinstance(schuldner, Person):
         betrag_pp = round(betrag/2, 2)
-        glaeubiger.neue_position(schuldner, betrag, betreff)
+        glaeubiger.neue_position(schuldner, betrag_pp, betreff)
     elif isinstance(schuldner, list):
         betrag_pp = round(betrag/(len(schuldner) + 1), 2)
         [glaeubiger.neue_position(s, betrag_pp, betreff) for s in schuldner]
