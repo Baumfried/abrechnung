@@ -67,9 +67,9 @@ class Person:
                 gegenpartei = other
             else:
                 raise ValueError('Erstes Argument muss entweder der Name oder die Instanz einer Person sein')
-            return sum([position['Betrag'] for position in self.positionen if re.match(position['Gegenpartei'], gegenpartei, re.I)])
+            return round(sum([position['Betrag'] for position in self.positionen if re.match(position['Gegenpartei'], gegenpartei, re.I)]), 2)
         else:
-            return sum([position['Betrag'] for position in self.positionen])
+            return round(sum([position['Betrag'] for position in self.positionen]), 2)
     
     def positionen_speichern(self, pfad=DATENPFAD):
         pfad_ganz = os.path.join(pfad, self.name + '.json')
