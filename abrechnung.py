@@ -61,7 +61,13 @@ class Person:
     
     def bilanz(self, other=None):
         if other:
-            return sum([position['Betrag'] for position in self.positionen if re.match(position['Gegenpartei'], other.name, re.I)])
+            if isinstance(other, Person):
+                gegenpartei = other.name
+            elif isinstance(other, str):
+                gegenpartei = other
+            else:
+                raise ValueError('Erstes Argument muss entweder der Name oder die Instanz einer Person sein')
+            return sum([position['Betrag'] for position in self.positionen if re.match(position['Gegenpartei'], gegenpartei, re.I)])
         else:
             return sum([position['Betrag'] for position in self.positionen])
     
