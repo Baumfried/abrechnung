@@ -8,7 +8,7 @@ if DATENPFAD not in glob.glob('*'):
 personen = {}
 
 class Person:
-    def __init__(self, name, startsaldo=None, json_laden=True, json_pfad=DATENPFAD):
+    def __init__(self, name, startsaldo=None, json_laden=False, json_pfad=DATENPFAD):
         if not isinstance(name, str):
             raise ValueError('Erstes Argument muss der Name der Person sein')
         
@@ -21,12 +21,9 @@ class Person:
         self.positionen = []
         
         if json_laden:
-            try:
-                pfad_ganz = os.path.join(json_pfad, self.name + '.json')
-                with open(pfad_ganz, 'r') as fh:
-                    self.positionen = json.load(fh)
-            except FileNotFoundError:
-                pass
+            pfad_ganz = os.path.join(json_pfad, self.name + '.json')
+            with open(pfad_ganz, 'r') as fh:
+                self.positionen = json.load(fh)
         
         if startsaldo:
             if not isinstance(startsaldo, dict):
