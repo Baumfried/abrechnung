@@ -3,8 +3,7 @@
 import re, json, os, glob
 
 DATENPFAD = 'Abrechnungsdaten'
-if DATENPFAD not in glob.glob('*'):
-    os.popen('mkdir ' + DATENPFAD)
+os.makedirs(DATENPFAD, exist_ok=True)
 personen = {}
 
 class Person:
@@ -68,10 +67,14 @@ class Person:
         else:
             return round(sum([position['Betrag'] for position in self.positionen]), 2)
     
-    def positionen_speichern(self, pfad=DATENPFAD):
+    def positionen_speichern(self, pfad=DATENPFAD, verbose=True):
         pfad_ganz = os.path.join(pfad, self.name + '.json')
+        if verbose:
+            print('Speichere Daten von {:s} in {:s}...'.format(self.name, pfad_ganz), end=' ')
         with open(pfad_ganz, 'w') as fh:
             json.dump(self.positionen, fh)
+        if verbose:
+            print('✅')
 
 def loesche(person):
     global personen
@@ -99,5 +102,7 @@ def alle_speichern():
 
 def alle_laden(json_pfad=DATENPFAD):
     global personen
-    for name in [re.search(r'([^/]*)\.json$', filename, re.I).group(0)[:-5] for filename in glob.glob(json_pfad + '/*') if re.search(r'.+\.json$', filename, re.I)]:
+    muster_dateiname = re.compile(r'([^/]+)\.json;', re.I)
+    gespeicherte_namen = muster_dateiname.findall(';'.join(glob.glob(json_pfad + '/*')) + ';')
+    for name in gespeicherte_namen:
         personen[name] = Person(name, json_laden=True, json_pfad=json_pfad)
